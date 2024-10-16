@@ -70,6 +70,24 @@
                         <p v-if="$page.props.errors.price" class="text-red-600">
                             {{ $page.props.errors.price }}
                         </p>
+                        <label
+                            for="countries"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                            تصویر
+                        </label>
+                        <input
+                            @change="fixImage"
+                            name="picture"
+                            type="file"
+                            class="block cursor-pointer w-50 p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                        <p
+                            v-if="$page.props.errors.picture"
+                            class="text-red-600"
+                        >
+                            {{ $page.props.errors.picture }}
+                        </p>
                     </div>
                 </div>
 
@@ -101,34 +119,25 @@
         </div>
     </AuthenticatedLayout>
 </template>
-<script>
+<script setup>
 import { Head, useForm, Link, usePage } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
-export default {
-    props: {},
-    setup(props) {
-        const form = useForm({
-            number: "",
-            floor: "",
-            price: "",
-        });
-
-        function submit() {
-            form.post(route("room_store"), {});
-        }
-        return { submit, form };
-    },
-    components: {
-        Head,
-        useForm,
-        Link,
-        usePage,
-        Dashboard,
-        AuthenticatedLayout,
-    },
-};
+const form = useForm({
+    number: "",
+    floor: "",
+    price: "",
+    picture: null,
+});
+function fixImage(event) {
+    const file = event.target.files[0];
+    form.picture = file;
+}
+function submit() {
+    form.post(route("room_store"), {
+        forceFormData: true,
+    });
+}
 </script>
 
 <style></style>

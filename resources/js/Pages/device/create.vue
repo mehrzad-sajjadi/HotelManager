@@ -66,34 +66,21 @@
         </div>
     </AuthenticatedLayout>
 </template>
-<script>
+<script setup>
 import { Head, useForm, Link, usePage } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
-export default {
-    components: {
-        Head,
-        useForm,
-        Link,
-        usePage,
-        Dashboard,
-        AuthenticatedLayout,
-    },
-    props: {
-        errors: Object,
-    },
-    setup(props) {
-        const form = useForm({
-            name: "",
-        });
+const props = defineProps({
+    errors: Object,
+});
+const form = useForm({
+    name: "",
+});
 
-        function submit() {
-            form.post(route("device_store"), {});
-        }
-        return { submit, form };
-    },
-};
+function submit() {
+    form.post(route("device_store"), {});
+}
 </script>
 
 <style></style>

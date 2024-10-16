@@ -25,6 +25,7 @@ class RoomRequest extends FormRequest
             "floor"=>["required","integer"],
             "number"=>["required","integer"],
             "price"=>["required","integer"],
+            "picture"=>["required"],
         ];
     }
 }

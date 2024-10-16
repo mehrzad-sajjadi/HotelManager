@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,8 @@ Route::prefix("/device_room")->middleware(['auth', 'verified',Admin::class])->gr
     Route::get("{id}/create",[RoomDeviceController::class,"create"])->name("device_room_create");
     Route::post("/",[RoomDeviceController::class,"store"])->name("device_room_store");
 }
+
+
 );
 
 
@@ -47,11 +50,37 @@ Route::prefix("/device")->middleware(['auth', 'verified',Admin::class])->group(f
 
 
 
+
+
 Route::prefix("/reserve")->middleware(['auth', 'verified',register::class])->group(function(){
     Route::get("/",[ReserveController::class,"index"])->name("reserve_index");
     Route::post("/",[ReserveController::class,"store"])->name("reserve_store");
+    Route::get("/{reserve}/edit",[ReserveController::class,"edit"])->name("reserve.edit");
     Route::delete("/{reserve}/delete",[ReserveController::class,"delete"])->name("reserve_delete");
 })->name("reserve_group");
+
+
+
+
+
+Route::prefix("country")->middleware(['auth', 'verified',register::class])->group(function(){
+    Route::get("/", [CountryController::class,"index"])->name("country.index");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

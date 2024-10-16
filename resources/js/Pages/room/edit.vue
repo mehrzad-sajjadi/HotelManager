@@ -105,36 +105,19 @@
         </div>
     </AuthenticatedLayout>
 </template>
-<script>
+<script setup>
 import { Head, useForm, Link, usePage } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
-export default {
-    props: {
-        room: Object,
-    },
-    setup(props) {
-        const form = useForm({
-            number: props.room.number,
-            floor: props.room.floor,
-            price: props.room.price,
-        });
-
-        function update(id) {
-            form.put(route("room_update", id), {});
-        }
-        return { update, form };
-    },
-    components: {
-        Head,
-        useForm,
-        Link,
-        usePage,
-        Dashboard,
-        AuthenticatedLayout,
-    },
-};
+const props = defineProps({
+    room: Object,
+});
+const form = useForm({
+    number: props.room.number,
+    floor: props.room.floor,
+    price: props.room.price,
+});
+function update(id) {
+    form.put(route("room_update", id), {});
+}
 </script>
-
-<style></style>

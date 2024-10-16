@@ -90,37 +90,24 @@
         </div>
     </AuthenticatedLayout>
 </template>
-<script>
+<script setup>
 import { Head, useForm, Link, usePage } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
-export default {
-    components: {
-        Head,
-        useForm,
-        Link,
-        usePage,
-        Dashboard,
-        AuthenticatedLayout,
-    },
-    props: {
-        devices: Object,
-        id: Number,
-    },
-    setup(props) {
-        const form = useForm({
-            number: "",
-            device_id: "",
-            room_id: props.id,
-        });
+const props = defineProps({
+    devices: Object,
+    id: Number,
+});
+const form = useForm({
+    number: "",
+    device_id: "",
+    room_id: props.id,
+});
 
-        function submit() {
-            form.post(route("device_room_store"));
-        }
-        return { form, submit };
-    },
-};
+function submit() {
+    form.post(route("device_room_store"));
+}
 </script>
 
 <style></style>

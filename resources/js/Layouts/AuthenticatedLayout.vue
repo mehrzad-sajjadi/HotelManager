@@ -44,7 +44,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink
                                     :href="route('room_index')"
                                     :active="
-                                        route().current('room_index') ||
+                                        route().current('room.index') ||
                                         route().current('room_edit') ||
                                         route().current('room_show') ||
                                         route().current('room_create') ||

@@ -50,7 +50,7 @@
                             :href="route('room_show', room.id)"
                             as="button"
                             type="button"
-                            class="h-8 px-4 flex items-center m-2 text-sm text-indigo-100 transition-colors duration-150 bg-blue-500 hover:bg-blue-600 rounded-lg focus:shadow-outline"
+                            class="h-8 px-4 flex items-center m-2 text-sm text-indigo-100 transition-colors duration-150 bg-blue-500 hover:bg-blue-900 rounded-lg focus:shadow-outline"
                         >
                             نمایش
                             <EyeIcon class="size-5"></EyeIcon>
@@ -60,7 +60,7 @@
                             @click="addDevice(room.id)"
                             as="button"
                             type="button"
-                            class="h-8 px-4 flex items-center m-2 text-sm transition-colors duration-150 bg-[#9dff00] hover:bg-[#11ff00] rounded-lg focus:shadow-outline"
+                            class="h-8 px-4 flex items-center m-2 text-sm transition-colors duration-150 bg-[#9dff00] hover:bg-[#55f828] rounded-lg focus:shadow-outline"
                         >
                             اضافه کردن وسیله
                             <PlusCircleIcon class="size-5"></PlusCircleIcon>
@@ -100,7 +100,7 @@
     </AuthenticatedLayout>
 </template>
 
-<script>
+<script setup>
 import { Link, router, usePage, Head, useForm } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
@@ -112,44 +112,26 @@ import {
     PlusCircleIcon,
 } from "@heroicons/vue/24/solid";
 
-export default {
-    components: {
-        Link,
-        usePage,
-        router,
-        useForm,
-        AuthenticatedLayout,
-        Head,
-        Dashboard,
-        TrashIcon,
-        EyeIcon,
-        PlusCircleIcon,
-        PencilSquareIcon,
-    },
-    props: {
-        rooms: Object,
-    },
-    setup(props) {
-        console.log("klsdjfljddklsj");
-        function remove(id) {
-            if (confirm("آیا از حذف اتاق مطمئنید ؟")) {
-                router.delete(route("room_delete", id));
-            }
-        }
+const props = defineProps({
+    rooms: Object,
+    cities: Object,
+    countries: Object,
+});
 
-        if (usePage().props.crud.success) {
-            window.setTimeout(function () {
-                window.alert(usePage().props.crud.success);
-            }, 500);
-        }
+console.log(props.countries);
+function remove(id) {
+    if (confirm("آیا از حذف اتاق مطمئنید ؟")) {
+        router.delete(route("room_delete", id));
+    }
+}
 
-        function addDevice(id) {
-            router.get(route("device_room_create", id));
-        }
+if (usePage().props.crud.success) {
+    window.setTimeout(function () {
+        window.alert(usePage().props.crud.success);
+    }, 500);
+}
 
-        return { remove, addDevice };
-    },
-};
+function addDevice(id) {
+    router.get(route("device_room_create", id));
+}
 </script>
-
-<style></style>

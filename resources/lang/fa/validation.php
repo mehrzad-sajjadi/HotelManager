@@ -97,6 +97,7 @@ return array(
     |
     */
     'attributes' => array(
+        "picture"=>"تصویر",
         "device_id"=>"نام وسیله",
         "end"=>"تاریخ پایان",
         "start"=>"تاریخ شروع",

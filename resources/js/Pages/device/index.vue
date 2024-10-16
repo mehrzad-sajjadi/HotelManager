@@ -72,51 +72,30 @@
     </AuthenticatedLayout>
 </template>
 
-<script>
+<script setup>
 import { Link, router, usePage, Head, useForm } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
 import {
     TrashIcon,
     EyeIcon,
     PencilSquareIcon,
     PlusCircleIcon,
 } from "@heroicons/vue/24/solid";
+const props = defineProps({
+    devices: Object,
+});
+function remove(id) {
+    if (confirm("آیا از وسیله اتاق مطمئنید ؟")) {
+        router.delete(route("device_delete", id));
+    }
+}
 
-export default {
-    components: {
-        Link,
-        usePage,
-        router,
-        useForm,
-        AuthenticatedLayout,
-        Head,
-        Dashboard,
-        TrashIcon,
-        EyeIcon,
-        PlusCircleIcon,
-        PencilSquareIcon,
-    },
-    props: {
-        devices: Object,
-    },
-    setup(props) {
-        function remove(id) {
-            if (confirm("آیا از وسیله اتاق مطمئنید ؟")) {
-                router.delete(route("device_delete", id));
-            }
-        }
-
-        // if (usePage().props.crud.success) {
-        //     window.setTimeout(function () {
-        //         window.alert(usePage().props.crud.success);
-        //     }, 500);
-        // }
-
-        return { remove };
-    },
-};
+// if (usePage().props.crud.success) {
+//     window.setTimeout(function () {
+//         window.alert(usePage().props.crud.success);
+//     }, 500);
+// }
 </script>
 
 <style></style>

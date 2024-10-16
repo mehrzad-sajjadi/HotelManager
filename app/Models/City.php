@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class City extends Model
 {
     use HasFactory;
 
-
-    protected $fillable=[
-        "floor",
-        "number",
-        "price",
-        "picture",
-    ];
+    
+    public function country(){
+        return $this->belongsTo(Country::class);
+    }
 
 }

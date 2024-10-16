@@ -3,27 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Room;
 use App\Models\RoomDevice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class RoomController extends Controller
 {
     public function index(){
-        $rooms = Room::all();
-        return Inertia::render("room/index",compact("rooms"));
+        $rooms = Room::latest()->get();
+        $countries = Country::all();
+        
+        $cities = City::all();
+
+        return Inertia::render("room/index",compact("rooms","countries","cities"));
     }
     public function create(){
         return Inertia::render("room/create");
     }
 
     public function store(RoomRequest $roomRequest){
-        $room = new Room();
-        $room->floor = $roomRequest->floor ;
-        $room->number = $roomRequest->number ;
-        $room->price = $roomRequest->price ;
-
+        $picture_name   = time().".".$roomRequest->file("picture")->getClientOriginalExtension() ;
+        $room           = new Room();
+        $room->floor    = $roomRequest->floor ;
+        $room->number   = $roomRequest->number ;
+        $room->price    = $roomRequest->price ;
+        $room->picture  = $picture_name;
+        $roomRequest->file("picture")->storeAs("pics",$picture_name,"public");
         $check = Room::where("floor",$room->floor)->where("number",$room->number )->get()->toArray();
 
         if($check){
@@ -40,6 +50,7 @@ class RoomController extends Controller
 
     public function delete($id){
         $room = Room::findOrFail($id);
+        unlink(storage_path('app/public/pics/'.$room->picture));
         $room->delete();
     }
 
@@ -61,8 +72,8 @@ class RoomController extends Controller
 
     public function show(Room $room){
         $room_devices = RoomDevice::where("room_id",$room->id)->get()->toArray();
-
-        return Inertia::render("room/show",compact("room_devices","room"));
+        $url = Storage::url("pics/".$room->picture);
+        return Inertia::render("room/show",compact("room_devices","room","url"));
     }
 
 }

@@ -19,17 +19,9 @@
                 <p class="px-4 m-2 text-base">
                     هزینه هر شب اقامت :
                     {{ $page.props.room.price }}
+                    <img :src="$page.props.url" alt="" />
                 </p>
-
                 <div>
-                    <!-- <Link
-                        :href="route('room_create')"
-                        as="button"
-                        type="button"
-                        class="h-8 px-4 m-2 text-sm duration-150 rounded focus:shadow-outline bg-[#6c757d] hover:bg-[#757b80] text-white border border-[#6c757d] hover:border-transparent"
-                    >
-                        ایجاد اتاق جدید
-                    <  /Link> -->
                     <Link
                         :href="route('room_index')"
                         as="button"
@@ -78,11 +70,10 @@
     </AuthenticatedLayout>
 </template>
 
-<script>
+<script setup>
 import { Link, router, usePage, Head, useForm } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
 import {
     TrashIcon,
     EyeIcon,
@@ -90,38 +81,11 @@ import {
     PlusCircleIcon,
 } from "@heroicons/vue/24/solid";
 
-export default {
-    components: {
-        Link,
-        usePage,
-        router,
-        useForm,
-        AuthenticatedLayout,
-        Head,
-        Dashboard,
-        TrashIcon,
-        EyeIcon,
-        PlusCircleIcon,
-        PencilSquareIcon,
-    },
-    props: {
-        room_devices: Object,
-        room: Object,
-    },
-    setup(props) {
-        // function remove(id) {
-        //     if (confirm("آیا از حذف اتاق مطمئنید ؟")) {
-        //         router.delete(route("room_delete", id));
-        //     }
-        // }
-        // if (usePage().props.crud.success) {
-        //     window.setTimeout(function () {
-        //         window.alert(usePage().props.crud.success);
-        //     }, 500);
-        // }
-        // return { remove };
-    },
-};
+const props = defineProps({
+    room_devices: Object,
+    room: Object,
+    url: String,
+});
 </script>
 
 <style></style>

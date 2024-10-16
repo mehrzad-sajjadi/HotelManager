@@ -24,17 +24,16 @@ class ReserveController extends Controller
 
 
     public function store(ReserveRequest $reserveRequest){
-        $start = DateConvertor::shamsi2miladi( $reserveRequest->start);
-        $end = DateConvertor::shamsi2miladi($reserveRequest->end);
-        $room = Reserve::where("room_id",$reserveRequest->room_id)->get()->toArray();
+        $start    = DateConvertor::shamsi2miladi( $reserveRequest->start);
+        $end      = DateConvertor::shamsi2miladi($reserveRequest->end);
+        $room     = Reserve::where("room_id",$reserveRequest->room_id)->get()->toArray();
+        $reserve  = new Reserve();
 
-        $reserve = new Reserve();
+        
         $reserve->user_id = $reserveRequest->user_id;
         $reserve->room_id = $reserveRequest->room_id;
         $reserve->start = $start;
         $reserve->end = $end;
-
-
         if($room){
             $check = Reserve::whereDate("start",">=",$start)->whereDate("start","<=",$end)->orWhereDate("start","<=",$end)->whereDate("end",">=",$end)->orWhereDate("start","<=",$start)->whereDate("end",">=",$start)->get()->toArray();
             if($check){
@@ -47,8 +46,6 @@ class ReserveController extends Controller
             $reserve->save();
             return redirect()->back()->with("message","Welcom to Our Hotel");
         }
-
-
     }
 
 
@@ -59,8 +56,14 @@ class ReserveController extends Controller
         }else{
             return redirect()->back()->withErrors("You dont have allow to delete ");
         }
+    }
 
-
+    public function edit(Reserve $reserve){
+        $reserve = $reserve->toArray();
+        $start_time =Jalalian::now()->format("Y/m/d");
+        $user_id = Auth::id();
+        $rooms = Room::all();        
+        return Inertia::render("reserve/edit",compact("reserve","start_time","user_id","rooms"));
     }
 
 

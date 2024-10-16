@@ -55,6 +55,18 @@
                                 <div
                                     class="min-w-max px-5 flex flex-row justify-between"
                                 >
+                                    <Link
+                                        :href="route('reserve.edit', room.id)"
+                                        class="h-8 px-4 m-2 flex items-center text-sm transition-colors duration-150 rounded-lg focus:shadow-outline bg-white hover:bg-black text-black hover:text-white border border-black hover:border-transparent"
+                                        as="button"
+                                        type="button"
+                                    >
+                                        ویرایش رزرو
+                                        <PencilSquareIcon
+                                            class="size-5"
+                                        ></PencilSquareIcon>
+                                    </Link>
+
                                     <button
                                         @click="remove(room.id)"
                                         class="h-8 px-4 m-2 flex items-center text-sm text-white duration-150 rounded-lg bg-red-600 border-red-600 border hover:border-black"

@@ -117,7 +117,9 @@ const props = defineProps({
     user_id: Number,
     start_time: String,
     errors: Object,
+    reserve: Object,
 });
+console.log(props.errors);
 const form = useForm({
     user_id: props.user_id,
     room_id: "",
@@ -131,5 +133,3 @@ function submit() {
     });
 }
 </script>
-
-<style></style>
