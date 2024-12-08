@@ -2,7 +2,9 @@
     <Head title="Room" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2
+                class="font-semibold dark:text-white text-xl text-gray-800 leading-tight"
+            >
                 Device
             </h2>
         </template>

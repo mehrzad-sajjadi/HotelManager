@@ -16,11 +16,8 @@ class RoomController extends Controller
 {
     public function index(){
         $rooms = Room::latest()->get();
-        $countries = Country::all();
-        
-        $cities = City::all();
 
-        return Inertia::render("room/index",compact("rooms","countries","cities"));
+        return Inertia::render("room/index",compact("rooms"));
     }
     public function create(){
         return Inertia::render("room/create");

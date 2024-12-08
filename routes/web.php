@@ -13,6 +13,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get("/slot",function(){
+    return Inertia::render("slot");
+});
+Route::get("/profile2",function(){
+    return Inertia::render("profileC");
+});
+
 
 Route::prefix("/room")->middleware(['auth', 'verified'])->group(function(){
     Route::get("/",[RoomController::class,"index"])->name("room_index");

@@ -4,7 +4,9 @@
     <AuthenticatedLayout>
         <template #header>
             <div class="flex w-[100%] flex-row justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <h2
+                    class="font-semibold text-xl text-gray-800 leading-tight dark:text-white"
+                >
                     رزروهای شما
                 </h2>
                 <Link
@@ -16,8 +18,11 @@
                 >
             </div>
         </template>
+        <div class="flex justify-center">
+            <Table :headers="header" :arrays="rooms"></Table>
+        </div>
 
-        <div class="py-12">
+        <!-- <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
@@ -88,11 +93,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </AuthenticatedLayout>
 </template>
 
-<script>
+<script setup>
 import { Link, router, usePage, Head, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import "../../css/font.css";
@@ -102,31 +107,14 @@ import {
     PencilSquareIcon,
     PlusCircleIcon,
 } from "@heroicons/vue/24/solid";
-
-export default {
-    components: {
-        Link,
-        usePage,
-        router,
-        useForm,
-        AuthenticatedLayout,
-        Head,
-        TrashIcon,
-        EyeIcon,
-        PlusCircleIcon,
-        PencilSquareIcon,
-    },
-    props: {
-        rooms: Object,
-    },
-    setup(props) {
-        function remove(id) {
-            if (confirm("آیا از حذف اتاق مطمئنید ؟")) {
-                router.delete(route("reserve_delete", id));
-            }
-        }
-
-        return { remove };
-    },
-};
+import Table from "@/Components/Table.vue";
+const props = defineProps({
+    rooms: Object,
+    header: Object,
+});
+// function remove(id) {
+//     if (confirm("آیا از حذف اتاق مطمئنید ؟")) {
+//         router.delete(route("reserve_delete", id));
+//     }
+// }
 </script>

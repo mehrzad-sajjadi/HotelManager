@@ -3,16 +3,21 @@
     <AuthenticatedLayout>
         <template #header>
             <div class="flex w-[100%] flex-row justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <h2
+                    class="font-semibold dark:text-white text-xl text-gray-800 leading-tight"
+                >
                     Room
                 </h2>
+
                 <Link
-                    :href="route('reserve_index')"
+                    v-if="$page.props.auth.user.is_admin == 1"
+                    :href="route('room_create')"
                     as="button"
                     type="button"
-                    class="h-8 px-4 m-2 text-sm duration-150 rounded focus:shadow-outline bg-[#6c757d] hover:bg-[#757b80] text-white border border-[#6c757d] hover:border-transparent"
-                    >صفحه اصلی</Link
+                    class="h-8 px-4 m-2 text-sm duration-150 rounded focus:shadow-outline bg-[#FFFF00] hover:bg-[#FFFF00] text-black border border-transparent hover:border-black"
                 >
+                    ایجاد اتاق جدید
+                </Link>
             </div>
         </template>
 
@@ -21,17 +26,6 @@
                 class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2"
             >
                 <p class="px-4 m-2 text-xl">لیست اتاق ها</p>
-                <div>
-                    <Link
-                        v-if="$page.props.auth.user.is_admin == 1"
-                        :href="route('room_create')"
-                        as="button"
-                        type="button"
-                        class="h-8 px-4 m-2 text-sm duration-150 rounded focus:shadow-outline bg-[#FFFF00] hover:bg-[#FFFF00] text-black border border-transparent hover:border-black"
-                    >
-                        ایجاد اتاق جدید
-                    </Link>
-                </div>
             </div>
             <ul>
                 <li
@@ -114,8 +108,6 @@ import {
 
 const props = defineProps({
     rooms: Object,
-    cities: Object,
-    countries: Object,
 });
 
 console.log(props.countries);

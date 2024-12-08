@@ -1,109 +1,134 @@
 <template>
     <Head title="Reserve" />
-    <div
-        class="flex flex-col w-5/6 mx-auto my-16 border border-gray-500 rounded-lg"
-    >
+    <AuthenticatedLayout>
+        <template #header>
+            <div class="flex w-[100%] flex-row justify-between items-center">
+                <h2
+                    class="font-semibold text-xl text-gray-800 leading-tight dark:text-white"
+                >
+                    Reserve
+                </h2>
+            </div>
+        </template>
         <div
-            class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2"
+            class="flex flex-col w-5/6 mx-auto my-16 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg"
         >
-            <p class="px-4 m-2 text-xl">رزرو اتاق</p>
-            <div>
-                <Link
-                    :href="route('dashboard')"
-                    as="button"
-                    type="button"
-                    class="h-8 px-4 m-2 text-sm text-black duration-150 rounded-lg bg-[#FFFF00] border-red-600 border hover:border-black"
-                >
-                    رزروهای شما
-                </Link>
+            <div
+                class="flex flex-row justify-between items-center w-full min-h-[50px] bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 dark:from-gray-800 dark:via-gray-700 dark:to-gray-600 px-4 py-2 rounded-t-xl border-b-2 dark:border-gray-700"
+            >
+                <p class="text-xl font-bold text-gray-800 dark:text-white">
+                    رزرو اتاق
+                </p>
+                <div class="flex gap-2">
+                    <Link
+                        :href="route('dashboard')"
+                        as="button"
+                        type="button"
+                        class="h-8 px-4 text-sm font-medium text-black dark:text-gray-900 bg-yellow-300 border border-yellow-400 rounded-full hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 transition"
+                    >
+                        رزروهای شما
+                    </Link>
 
-                <Link
-                    :href="route('room_index')"
-                    as="button"
-                    type="button"
-                    class="h-8 px-4 m-2 text-sm text-white duration-150 rounded-lg bg-[#0800ff] border-[#0800ff] border hover:border-black"
+                    <Link
+                        :href="route('room_index')"
+                        as="button"
+                        type="button"
+                        class="h-8 px-4 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-full shadow hover:shadow-lg focus:ring-2 focus:ring-blue-500 transition"
+                    >
+                        لیست اتاق‌ها
+                    </Link>
+                </div>
+            </div>
+
+            <div class="p-4">
+                <label
+                    class="block my-2 text-lg font-medium text-gray-800 dark:text-gray-300"
                 >
-                    لیست اتاقها
-                </Link>
+                    اتاق
+                </label>
+                <select
+                    v-model="form.room_id"
+                    class="block w-3/4 md:w-1/2 p-2 text-gray-800 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option
+                        v-for="(room, index) in rooms"
+                        :key="index"
+                        :value="room.id"
+                        class="rounded-lg"
+                    >
+                        شماره: {{ room.number }} طبقه: {{ room.floor }}
+                    </option>
+                </select>
+                <p v-if="$page.props.errors.room_id" class="text-red-500 mt-2">
+                    {{ $page.props.errors.room_id }}
+                </p>
+                <div class="flex flex-wrap gap-0">
+                    <div class="w-[50%] px-2">
+                        <label
+                            class="block my-2 text-lg font-medium text-gray-800 dark:text-gray-300"
+                        >
+                            تاریخ شروع رزرو
+                        </label>
+                        <date-picker
+                            :min="$page.props.start_time"
+                            v-model="form.start"
+                        ></date-picker>
+                        <p
+                            v-if="$page.props.errors.start"
+                            class="text-red-500 mt-2"
+                        >
+                            {{ $page.props.errors.start }}
+                        </p>
+                    </div>
+
+                    <div class="w-[50%] px-2">
+                        <label
+                            class="block my-2 text-lg font-medium text-gray-800 dark:text-gray-300"
+                        >
+                            تاریخ پایان رزرو
+                        </label>
+                        <date-picker
+                            v-model="form.end"
+                            :min="$page.props.start_time"
+                            class="block w-full"
+                        ></date-picker>
+                        <p
+                            v-if="$page.props.errors.end"
+                            class="text-red-500 mt-2"
+                        >
+                            {{ $page.props.errors.end }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="flex flex-row justify-between items-center w-full bg-gray-100 dark:bg-gray-800 px-4 py-2 border-t-2 dark:border-gray-700"
+            >
+                <button
+                    @click="submit"
+                    class="h-10 px-6 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-full shadow hover:shadow-lg focus:ring-2 focus:ring-blue-500 transition"
+                    type="button"
+                >
+                    رزرو اتاق
+                </button>
             </div>
         </div>
-
-        <label
-            class="block my-2 text-lg font-medium text-gray-900 dark:text-white"
+        <p
+            class="text-center text-xl text-green-600 dark:text-green-400 mt-5"
+            v-if="$page.props.crud.success"
         >
-            اتاق
-        </label>
-
-        <select v-model="form.room_id" class="rounded-lg">
-            <option
-                class="rounded-lg w-3"
-                v-for="(room, index) in rooms"
-                :key="index"
-                :value="room.id"
-            >
-                شماره :
-                {{ room.number }}
-                طبقه :
-                {{ room.floor }}
-            </option>
-        </select>
-        <p v-if="$page.props.errors.room_id" class="text-red-600">
-            {{ $page.props.errors.room_id }}
+            {{ $page.props.crud.success }}
         </p>
-
-        <label
-            class="block mb-2 my-2 text-lg font-medium text-gray-900 dark:text-white"
+        <p
+            class="text-center text-xl text-red-600 mt-5"
+            v-if="$page.props.errors"
         >
-            تاریخ شروع رزرو
-        </label>
-        <date-picker
-            :min="$page.props.start_time"
-            v-model="form.start"
-        ></date-picker>
-        <p v-if="$page.props.errors.start" class="text-red-600">
-            {{ $page.props.errors.start }}
+            <span v-for="(error, index) in errors" :key="index">{{
+                error
+            }}</span>
         </p>
-
-        <label
-            class="block mb-2 text-lg my-2 font-medium text-gray-900 dark:text-white"
-        >
-            تاریخ پایان رزرو
-        </label>
-
-        <date-picker
-            v-model="form.end"
-            :min="$page.props.start_time"
-        ></date-picker>
-        <p v-if="$page.props.errors.end" class="text-red-600">
-            {{ $page.props.errors.end }}
-        </p>
-
-        <div
-            class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2 mt-5"
-        >
-            <button
-                @click="submit"
-                class="h-9 px-4 m-2 text-lg duration-150 rounded focus:shadow-outline bg-white hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-600 hover:border-transparent"
-                as="button"
-                type="button"
-            >
-                رزرو اتاق
-            </button>
-        </div>
-    </div>
-    <p
-        class="flex flex-row justify-center text-xl text-center pt-5"
-        v-if="$page.props.crud.success"
-    >
-        {{ $page.props.crud.success }}
-    </p>
-    <p></p>
-    <p
-        class="flex flex-row justify-center text-xl text-center pt-5 text-red-600"
-        v-if="$page.props.errors"
-    >
-        <span v-for="(error, index) in errors" :key="index">{{ error }}</span>
-    </p>
+    </AuthenticatedLayout>
 </template>
 
 <script setup>
@@ -111,6 +136,7 @@ import { Head, useForm, Link, usePage } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import Vue3PersianDatetimePicker from "vue3-persian-datetime-picker";
 import DatePicker from "vue3-persian-datetime-picker";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 const props = defineProps({
     rooms: Object,
