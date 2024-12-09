@@ -28,7 +28,7 @@ import {
 <template>
     <div
         :class="[
-            'fixed left-0 transition-all duration-300',
+            'fixed left-0 transition-all duration-300 h-screen overflow-y-auto',
             useStorage ? 'w-[calc(100%_-_300px)]' : 'w-full',
         ]"
         class="fixed left-0"

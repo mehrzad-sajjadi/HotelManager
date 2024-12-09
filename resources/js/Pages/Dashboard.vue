@@ -9,13 +9,6 @@
                 >
                     رزروهای شما
                 </h2>
-                <Link
-                    :href="route('reserve_index')"
-                    as="button"
-                    type="button"
-                    class="h-8 px-4 m-2 text-sm duration-150 rounded focus:shadow-outline bg-[#6c757d] hover:bg-[#757b80] text-white border border-[#6c757d] hover:border-transparent"
-                    >صفحه اصلی</Link
-                >
             </div>
         </template>
         <div class="flex justify-center">

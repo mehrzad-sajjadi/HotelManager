@@ -70,7 +70,7 @@
                             تاریخ شروع رزرو
                         </label>
                         <date-picker
-                            :min="$page.props.start_time"
+                            :min="$page.props.right_time"
                             v-model="form.start"
                         ></date-picker>
                         <p
@@ -89,7 +89,7 @@
                         </label>
                         <date-picker
                             v-model="form.end"
-                            :min="$page.props.start_time"
+                            :min="$page.props.right_time"
                             class="block w-full"
                         ></date-picker>
                         <p
@@ -124,9 +124,16 @@
             class="text-center text-xl text-red-600 mt-5"
             v-if="$page.props.errors"
         >
-            <span v-for="(error, index) in errors" :key="index">{{
-                error
-            }}</span>
+            <span v-for="(error, index) in errors" :key="index">
+                <span
+                    v-if="
+                        error ==
+                        'Unfortunately, this room has already been booked for this date range !'
+                    "
+                >
+                    {{ error }}
+                </span>
+            </span>
         </p>
     </AuthenticatedLayout>
 </template>
@@ -141,7 +148,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 const props = defineProps({
     rooms: Object,
     user_id: Number,
-    start_time: String,
+    right_time: String,
     errors: Object,
 });
 const form = useForm({

@@ -16,10 +16,10 @@ use Morilog\Jalali\Jalalian;
 class ReserveController extends Controller
 {
     public function index(){
-        $start_time =Jalalian::now()->format("Y/m/d");
+        $right_time = Jalalian::now()->format("Y/m/d"); 
         $user_id = Auth::id();
         $rooms = Room::all();
-        return Inertia::render("reserve/index",compact("user_id","rooms","start_time"));
+        return Inertia::render("reserve/index",compact("user_id","rooms","right_time"));
     }
 
 
@@ -59,11 +59,12 @@ class ReserveController extends Controller
     }
 
     public function edit(Reserve $reserve){
-        $reserve = $reserve->toArray();
-        $start_time =Jalalian::now()->format("Y/m/d");
+        $right_time = Jalalian::now()->format("Y/m/d"); 
+        $start_time = DateConvertor::miladi2shamsi($reserve->start);
+        $end_time= DateConvertor::miladi2shamsi($reserve->end);
         $user_id = Auth::id();
         $rooms = Room::all();        
-        return Inertia::render("reserve/edit",compact("reserve","start_time","user_id","rooms"));
+        return Inertia::render("reserve/edit",compact("reserve","start_time","user_id","rooms","end_time","right_time"));
     }
 
 

@@ -20,18 +20,21 @@ class DashboardController extends Controller
             }else{
                 $status = "فعال"; 
             }
-            $end = $record->end;   // فرض بر این است که از نوع تاریخ است و تبدیل به Carbon شده
-            $start = $record->start;
+            $end = Carbon::createFromDate($record->end);   // فرض بر این است که از نوع تاریخ است و تبدیل به Carbon شده
+            $start = Carbon::createFromDate($record->start);
             
-            $stay = $end->diffInDays($start);
+            $stay = $start->diffInDays($end);
+            $money = ($stay+1) * $record->room_money   ;
+
             $array=[];
             $array["floor"]=["type"=>"text","data"=>$record->room_floor];
             $array["number"]=["type"=>"text","data"=>$record->room_number];
             $array["start"]=["type"=>"text","data"=>$record->start_shamsi];
             $array["end"]=["type"=>"text","data"=>$record->end_shamsi];
-            $array["stay"]=["type"=>"text","data"=>$record->$stay];
+            $array["stay"]=["type"=>"text","data"=>$stay+1 ];
             
             $array["status"]=["type"=>"text","data"=>$status];
+            $array["money"]=["type"=>"text","data"=> $money];
             
             $array["button"]    = [ "type"=>"button",
             "items"=>[
@@ -42,7 +45,8 @@ class DashboardController extends Controller
 
             return $array;
         });
-        $header = ["طبقه","شماره","شروع رزرو","پایان رزرو","روزهای اقامت","وضعیت","عملیات"];
+
+        $header = ["طبقه","شماره","شروع رزرو","پایان رزرو","روزهای اقامت","وضعیت","هزینه","عملیات"];
 
         return Inertia::render('Dashboard',compact("rooms","header"));
     }

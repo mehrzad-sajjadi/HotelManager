@@ -7,7 +7,9 @@
             </h2>
         </template>
 
-        <div class="w-5/6 mx-auto my-16 border border-gray-500 rounded-lg">
+        <div
+            class="w-5/6 mx-auto my-16 border border-gray-500 rounded-lg overflow-auto"
+        >
             <div
                 class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2"
             >
@@ -19,7 +21,7 @@
                 <p class="px-4 m-2 text-base">
                     هزینه هر شب اقامت :
                     {{ $page.props.room.price }}
-                    <img :src="$page.props.url" alt="" />
+                    <!-- <img :src="$page.props.url" alt="" /> -->
                 </p>
                 <div>
                     <Link
@@ -38,7 +40,7 @@
                     :key="index"
                     class="flex flex-row justify-between w-full min-h-min py-4 px-4 border-b-2 border-neutral-100 items-center hover:bg-[#21252908]"
                 >
-                    <div class="content w-[20%] flex flex-row justify-between">
+                    <div class="content w-[30%] flex flex-row justify-between">
                         {{ room_device.device_name }}
 
                         <span class="mx-5">
@@ -47,9 +49,20 @@
                         </span>
                     </div>
                     <div class="min-w-max px-5 flex flex-row justify-between">
+                        <Link
+                            v-if="$page.props.auth.user.is_admin == 1"
+                            :href="route('device.room.edit', room_device.id)"
+                            class="h-8 px-4 m-2 flex items-center text-sm transition-colors duration-150 rounded-lg focus:shadow-outline bg-white hover:bg-black text-black hover:text-white border whitespace-nowrap border-black hover:border-transparent"
+                            as="button"
+                            type="button"
+                        >
+                            ویرایش
+                            <PencilSquareIcon class="size-5"></PencilSquareIcon>
+                        </Link>
+
                         <button
                             v-if="$page.props.auth.user.is_admin == 1"
-                            @click="remove(room.id)"
+                            @click="remove(room_device.id)"
                             class="h-8 px-4 m-2 flex items-center text-sm text-white duration-150 rounded-lg bg-red-600 border-red-600 border hover:border-black"
                             as="button"
                             type="button"
@@ -74,6 +87,7 @@
 import { Link, router, usePage, Head, useForm } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Table from "@/Components/Table.vue";
 import {
     TrashIcon,
     EyeIcon,
@@ -86,6 +100,10 @@ const props = defineProps({
     room: Object,
     url: String,
 });
+
+function remove(id) {
+    router.delete(route("device.room.delete", id));
+}
 </script>
 
 <style></style>

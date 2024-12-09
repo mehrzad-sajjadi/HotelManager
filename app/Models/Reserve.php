@@ -18,7 +18,7 @@ class Reserve extends Model
         "end"
     ];
     
-    public $appends=["room_number","room_floor","start_shamsi","end_shamsi"];
+    public $appends=["room_number","room_floor","start_shamsi","end_shamsi","room_money"];
 
     public function room(){
         return $this->BelongsTo(Room::class);
@@ -31,7 +31,9 @@ class Reserve extends Model
     public function getRoomNumberAttribute(){
         return $this->room->number;
     }
-    
+    public function getRoomMoneyAttribute(){
+        return $this->room->price;
+    }
     public function getRoomFloorAttribute(){
         return $this->room->floor;
     }

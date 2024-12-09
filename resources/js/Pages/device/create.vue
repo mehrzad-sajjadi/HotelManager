@@ -66,6 +66,7 @@
         </div>
     </AuthenticatedLayout>
 </template>
+
 <script setup>
 import { Head, useForm, Link, usePage } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";

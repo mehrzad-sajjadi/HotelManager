@@ -40,6 +40,7 @@
             </NavLink>
         </div>
         <div
+            v-if="usePage().props.auth.user.is_admin == 1"
             :class="[
                 'text-center flex justify-center items-center w-full h-[50px] text-white',
                 route().current('device_index') ||
@@ -84,7 +85,7 @@
 
 <script setup>
 // import PrimeVue from "primevue/config";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import NavLink from "@/Components/NavLink.vue";
 
 const props = defineProps({

@@ -20,73 +20,12 @@
                 </Link>
             </div>
         </template>
-
-        <div class="w-5/6 mx-auto my-16 border border-gray-500 rounded-lg">
-            <div
-                class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2"
-            >
-                <p class="px-4 m-2 text-xl">لیست اتاق ها</p>
-            </div>
-            <ul>
-                <li
-                    v-for="(room, index) in rooms"
-                    :key="index"
-                    class="flex flex-row justify-between w-full min-h-min py-4 px-4 border-b-2 border-neutral-100 items-center hover:bg-[#21252908]"
-                >
-                    <div class="content">
-                        اتاق :
-                        {{ room.number }}
-                        طبقه :
-                        {{ room.floor }}
-                    </div>
-                    <div class="min-w-max px-5 flex flex-row justify-between">
-                        <Link
-                            :href="route('room_show', room.id)"
-                            as="button"
-                            type="button"
-                            class="h-8 px-4 flex items-center m-2 text-sm text-indigo-100 transition-colors duration-150 bg-blue-500 hover:bg-blue-900 rounded-lg focus:shadow-outline"
-                        >
-                            نمایش
-                            <EyeIcon class="size-5"></EyeIcon>
-                        </Link>
-                        <button
-                            v-if="$page.props.auth.user.is_admin == 1"
-                            @click="addDevice(room.id)"
-                            as="button"
-                            type="button"
-                            class="h-8 px-4 flex items-center m-2 text-sm transition-colors duration-150 bg-[#9dff00] hover:bg-[#55f828] rounded-lg focus:shadow-outline"
-                        >
-                            اضافه کردن وسیله
-                            <PlusCircleIcon class="size-5"></PlusCircleIcon>
-                        </button>
-
-                        <button
-                            v-if="$page.props.auth.user.is_admin == 1"
-                            @click="remove(room.id)"
-                            class="h-8 px-4 m-2 flex items-center text-sm text-white duration-150 rounded-lg bg-red-600 border-red-600 border hover:border-black"
-                            as="button"
-                            type="button"
-                        >
-                            حذف
-                            <TrashIcon class="size-5"></TrashIcon>
-                        </button>
-
-                        <Link
-                            v-if="$page.props.auth.user.is_admin == 1"
-                            :href="route('room_edit', room.id)"
-                            as="button"
-                            type="button"
-                            class="h-8 px-4 m-2 flex items-center text-sm transition-colors duration-150 rounded-lg focus:shadow-outline bg-white hover:bg-black text-black hover:text-white border border-black hover:border-transparent"
-                        >
-                            ویرایش
-                            <PencilSquareIcon class="size-5"></PencilSquareIcon>
-                        </Link>
-                    </div>
-                </li>
-            </ul>
+        <div class="flex justify-center">
+            <Table :headers="header" :arrays="rooms"></Table>
         </div>
+
         <p
-            class="flex flex-row justify-center text-xl text-center"
+            class="flex flex-row justify-center text-xl text-center my-10"
             v-if="$page.props.crud.success"
         >
             {{ $page.props.crud.success }}
@@ -98,7 +37,7 @@
 import { Link, router, usePage, Head, useForm } from "@inertiajs/vue3";
 import Dashboard from "@/Pages/Dashboard.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
+import Table from "@/Components/Table.vue";
 import {
     TrashIcon,
     EyeIcon,
@@ -108,6 +47,7 @@ import {
 
 const props = defineProps({
     rooms: Object,
+    header: Object,
 });
 
 console.log(props.countries);

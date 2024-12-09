@@ -2,12 +2,14 @@
     <div
         class="p-4 bg-gray-100 dark:bg-gray-950 rounded-lg shadow-md dark:text-white"
     >
-        <table class="border border-gray-300 rounded-lg bg-white table-auto">
+        <table
+            class="border border-gray-300 rounded-lg bg-white table-auto mx-auto"
+        >
             <thead class="bg-blue-600 text-white">
                 <tr>
                     <!-- هدر جدول -->
                     <th
-                        class="text-center py-3 px-6 text-base font-semibold uppercase tracking-wider"
+                        class="text-center py-3 min-w-min text-base font-semibold uppercase tracking-wider"
                         v-for="(header, index) in headers"
                         :key="index"
                     >

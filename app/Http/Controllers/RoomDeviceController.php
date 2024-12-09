@@ -14,8 +14,20 @@ class RoomDeviceController extends Controller
         $devices = Device::all();
         return Inertia::render("room/add_device",compact("id","devices"));
     }
+    public function edit(RoomDevice $room_devices){
+        $devices = Device::all();
+        // $devicId = RoomDevice::find($devicId);
+        return Inertia::render("room/edit_device",compact("devices","room_devices"));
+    }
 
+    public function update(RoomDeviceRequest $roomDeviceRequest){
 
+    }
+    public function delete($id){
+        $roomDevice = RoomDevice::find($id);
+        $roomDevice->delete();
+    }
+        
     public function store(RoomDeviceRequest $roomDeviceRequest){
         $roomDevice = new RoomDevice();
         $roomDevice->number = $roomDeviceRequest->number;

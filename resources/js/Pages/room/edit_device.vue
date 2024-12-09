@@ -5,7 +5,7 @@
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight"
             >
-                Add Device to Room
+                Edit Device in Room
             </h2>
         </template>
 
@@ -19,7 +19,7 @@
                 <p
                     class="text-lg font-semibold text-gray-800 dark:text-gray-100"
                 >
-                    اضافه کردن وسیله
+                    ویرایش وسیله اتاق
                 </p>
             </div>
 
@@ -81,11 +81,11 @@
 
                 <div class="flex justify-between space-x-4 rtl:space-x-reverse">
                     <button
-                        @click="submit"
+                        @click="update"
                         type="button"
                         class="h-8 px-4 min-w-10 m-2 flex items-center text-sm duration-150 rounded-lg bg-white dark:bg-gray-700 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-colors"
                     >
-                        اضافه کردن وسیله
+                        ویرایش وسیله
                     </button>
                     <Link
                         :href="route('room_index')"
@@ -108,15 +108,16 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 const props = defineProps({
     devices: Object,
     id: Number,
+    room_devices: Object,
 });
 const form = useForm({
-    number: "",
-    device_id: "",
-    room_id: props.id,
+    number: props.room_devices.number,
+    device_id: props.room_devices.device_id,
+    room_id: props.room_devices.room_id,
 });
 
-function submit() {
-    form.post(route("device_room_store"));
+function update() {
+    form.put(route("device.room.update"));
 }
 </script>
 

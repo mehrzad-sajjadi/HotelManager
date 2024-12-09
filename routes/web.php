@@ -35,6 +35,10 @@ Route::prefix("/room")->middleware(['auth', 'verified'])->group(function(){
 
 Route::prefix("/device_room")->middleware(['auth', 'verified',Admin::class])->group(function(){
     Route::get("{id}/create",[RoomDeviceController::class,"create"])->name("device_room_create");
+    Route::get("{room_devices}/edit",[RoomDeviceController::class,"edit"])->name("device.room.edit");
+    Route::put("{room_devices}/update",[RoomDeviceController::class,"update"])->name("device.room.update");
+    Route::delete("{room_devices}/delete",[RoomDeviceController::class,"delete"])->name("device.room.delete");
+
     Route::post("/",[RoomDeviceController::class,"store"])->name("device_room_store");
 }
 

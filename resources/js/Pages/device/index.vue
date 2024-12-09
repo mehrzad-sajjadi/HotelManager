@@ -2,17 +2,12 @@
     <Head title="Room" />
     <AuthenticatedLayout>
         <template #header>
-            <h2
-                class="font-semibold dark:text-white text-xl text-gray-800 leading-tight"
-            >
-                Device
-            </h2>
-        </template>
-        <div class="w-5/6 mx-auto my-16 border border-gray-500 rounded-lg">
-            <div
-                class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2"
-            >
-                <p class="px-4 m-2 text-xl">لیست وسایل</p>
+            <div class="flex w-[100%] flex-row justify-between items-center">
+                <h2
+                    class="font-semibold dark:text-white text-xl text-gray-800 leading-tight"
+                >
+                    Device
+                </h2>
                 <div>
                     <Link
                         :href="route('device_create')"
@@ -22,15 +17,14 @@
                     >
                         ایجاد وسیله جدید
                     </Link>
-                    <Link
-                        :href="route('dashboard')"
-                        as="button"
-                        type="button"
-                        class="h-8 px-4 m-2 text-sm duration-150 rounded focus:shadow-outline bg-[#ffc107] hover:bg-[#ffe607] text-black border border-[#ffc107] hover:border-transparent"
-                    >
-                        بازگشت
-                    </Link>
                 </div>
+            </div>
+        </template>
+        <div class="w-5/6 mx-auto my-16 border border-gray-500 rounded-lg">
+            <div
+                class="flex flex-row justify-between items-center w-full min-h-min bg-[#21252908] border-b-2"
+            >
+                <p class="px-4 m-2 text-xl">لیست وسایل</p>
             </div>
             <ul>
                 <li
